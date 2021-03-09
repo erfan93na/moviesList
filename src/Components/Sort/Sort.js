@@ -11,7 +11,7 @@ const Sort = () => {
       setAnchorEl(null);
     };
   
-  return <Box display="flex"><Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+  return <Box display="flex" p={3} justifyContent="flex-end"><Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
  Sort By Price
 </Button>
 <Menu

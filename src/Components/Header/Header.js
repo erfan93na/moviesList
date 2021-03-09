@@ -1,9 +1,9 @@
-import { Box, makeStyles, Grid } from "@material-ui/core";
+import { Box, makeStyles, Grid,Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  navLinkActive: theme.palette.primary,
-  navLink:{display:"flex",justifyContent:"center"}
+  navLinkActive:{backgroundColor:theme.palette.primary.light,"&,&:visited":{color:"white"}},
+  navLink:{display:"flex",justifyContent:"center",padding:"3rem",color:"black"}
 }));
 const Header = () => {
   const classes = useStyles();
@@ -12,18 +12,14 @@ const Header = () => {
      
         <Grid item md={6}>
           {" "}
-          <Box justifyContent="center" p={10}>
             <NavLink to="/pageA" activeClassName={classes.navLinkActive} className={classes.navLink}>
-              PageA
+              <Typography variant={"h4"}>Page A</Typography>
             </NavLink>
-          </Box>
         </Grid>
         <Grid item  md={6}>
-        <Box justifyContent="center" p={10}>
           <NavLink to="/pageB" activeClassName={classes.navLinkActive} className={classes.navLink}>
-            PageB
+          <Typography variant={"h4"}>Page B</Typography>
           </NavLink>
-        </Box>
       </Grid>
     </Grid>
   );
