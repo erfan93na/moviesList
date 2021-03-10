@@ -1,14 +1,15 @@
-import {Typography,Card,CardActionArea,CardMedia,CardContent,CardActions} from "@material-ui/core"
+import {StarRate, StarRateOutlined} from "@material-ui/icons"
+import {Typography,Card,CardActionArea,CardMedia,CardContent,CardActions,Grid} from "@material-ui/core"
 const Item = ({image,title,description,rate,price}) => {
-    return ( <Card >
+    return (<Grid xs={3} item><Card >
         <CardActionArea>
           <CardMedia
             image={image}
             title={title}
-            style={{height:300}}
+            style={{height:500}}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant="h6" component="h2">
               {title}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
@@ -24,7 +25,7 @@ const Item = ({image,title,description,rate,price}) => {
            Price: {price} $
           </Typography>
         </CardActions>
-      </Card> );
+      </Card></Grid>  );
 }
  
 export default Item;

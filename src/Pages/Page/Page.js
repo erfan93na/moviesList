@@ -1,32 +1,69 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useMemo } from "react";
 import FilterBar from "../../Components/FiltersBar/FilterBar/FilterBar";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import Sort from "../../Components/Sort/Sort";
 import MoviesContainer from "../../Containers/Movies/MoviesContainer/MoviesContainer";
+import { FiltersContext } from "../../FiltersContext";
 const Page = ({ filters, data }) => {
-  const [moviesState,setMovies]=useState(data)
+  const [moviesState, setMovies] = useState(data);
   const [searchState, setSearchState] = useState("");
-  const handleSearchFieldChange = (e) => {
-    setSearchState(e.target.value);
-  };
-  
-  useEffect(() => {
-     setMovies(data.filter(
-      (movie) =>
-        movie.title.includes(searchState) ||
-        movie.description.includes(searchState) ||
-        movie.price===(+searchState)
-    ))
-  },[searchState,data]);
+  const [filtersState, setFiltersState] = useState({});
+  const [sortState, setSortState] = useState("");
+  console.log(sortState);
 
+  const handleSearchFieldChange = (e) => {
+    setSearchState(e.target.value.toLowerCase());
+  };
+
+  useEffect(() => {
+    console.log(3);
+
+    setMovies((prevState) => {
+      return data.filter(
+        (movie) =>
+          movie.title.toLowerCase().includes(searchState) ||
+          movie.description.toLowerCase().includes(searchState) ||
+          movie.price === +searchState
+      );
+    });
+  }, [searchState, data]);
+
+  useEffect(() => {
+    console.log(2);
+
+    if (filtersState.filterName && filtersState.value) {
+      const filterName = filtersState.filterName;
+      const value = filtersState.value;
+      setMovies((prevState) => {
+        prevState.sort((a, b) => a[filterName] - b[filterName]);
+        return value === "highest"
+          ? [prevState[prevState.length - 1]]
+          : [prevState[0]];
+      });
+    }
+  }, [filtersState, moviesState, data]);
+
+  useEffect(() => {
+    console.log("useEff");
+
+    // if (sortState) {
+    setMovies((prevState) => {
+      if (sortState === "DESC") {
+        return prevState.sort((a, b) => a.rate - b.rate);
+      }
+      return prevState.sort((a, b) => b.rate - a.rate);
+    });
+    // }
+  }, [sortState]);
+  const memoFilterBar = useMemo(() => <FilterBar filters={filters} />);
   return (
     <>
       <SearchBar handleSearchFieldChange={handleSearchFieldChange} />
-      <FilterBar filters={filters} />
-      <Sort />
-      <MoviesContainer
-        data={moviesState}
-      />
+      <FiltersContext.Provider value={[filtersState, setFiltersState]}>
+{memoFilterBar}
+      </FiltersContext.Provider>
+      <Sort setSortState={setSortState} sortState={sortState} />
+      <MoviesContainer data={moviesState} />
     </>
   );
 };

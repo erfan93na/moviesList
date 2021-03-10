@@ -6,24 +6,24 @@ import {
   Box,
 } from "@material-ui/core";
 import React from "react";
-const Filter = React.memo(({ filterName }) => {
-  console.log(3)
-  const [age, setAge] = React.useState("");
+import { FiltersContext } from "../../../FiltersContext";
+const Filter = (({ filterName }) => {
+  console.log(77);
+  const [filtersState, setFiltersState] = React.useContext(FiltersContext);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setFiltersState({ filterName: filterName, value: event.target.value });
   };
 
   return (
     <Box width={"100px"} px={2}>
       {" "}
-      <FormControl fullWidth           variant="outlined"
->
+      <FormControl fullWidth variant="outlined">
         <InputLabel id="demo-simple-select-label">{filterName}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={filtersState.value}
           onChange={handleChange}
         >
           <MenuItem value={"highest"}>Highest</MenuItem>
@@ -32,6 +32,6 @@ const Filter = React.memo(({ filterName }) => {
       </FormControl>
     </Box>
   );
-})
+});
 
 export default Filter;
