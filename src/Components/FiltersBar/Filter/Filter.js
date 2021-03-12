@@ -8,7 +8,6 @@ import {
 import React from "react";
 import { FiltersContext } from "../../../FiltersContext";
 const Filter = (({ filterName }) => {
-  console.log(77);
   const [filtersState, setFiltersState] = React.useContext(FiltersContext);
 
   const handleChange = (event) => {

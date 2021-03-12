@@ -1,4 +1,3 @@
-import {StarRate, StarRateOutlined} from "@material-ui/icons"
 import {Typography,Card,CardActionArea,CardMedia,CardContent,CardActions,Grid} from "@material-ui/core"
 const Item = ({image,title,description,rate,price}) => {
     return (<Grid xs={3} item><Card >

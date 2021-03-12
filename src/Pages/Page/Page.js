@@ -16,7 +16,6 @@ const Page = ({ filters, data }) => {
   };
 
   useEffect(() => {
-    console.log(3);
 
     setMovies((prevState) => {
       return data.filter(
@@ -29,7 +28,6 @@ const Page = ({ filters, data }) => {
   }, [searchState, data]);
 
   useEffect(() => {
-    console.log(2);
 
     if (filtersState.filterName && filtersState.value) {
       const filterName = filtersState.filterName;
@@ -41,21 +39,21 @@ const Page = ({ filters, data }) => {
           : [prevState[0]];
       });
     }
-  }, [filtersState, moviesState, data]);
+  }, [filtersState]);
 
-  useEffect(() => {
-    console.log("useEff");
+  // useEffect(() => {
+  //   console.log("useEff");
 
-    // if (sortState) {
-    setMovies((prevState) => {
-      if (sortState === "DESC") {
-        return prevState.sort((a, b) => a.rate - b.rate);
-      }
-      return prevState.sort((a, b) => b.rate - a.rate);
-    });
-    // }
-  }, [sortState]);
-  const memoFilterBar = useMemo(() => <FilterBar filters={filters} />);
+  //    if (sortState) {
+  //   setMovies((prevState) => {
+  //     if (sortState === "DESC") {
+  //       return prevState.sort((a, b) => a.rate - b.rate);
+  //     }
+  //     return prevState.sort((a, b) => b.rate - a.rate);
+  //   });
+  //    }
+  // }, [sortState]);
+  const memoFilterBar = useMemo(() => <FilterBar filters={filters} />,[filters]);
   return (
     <>
       <SearchBar handleSearchFieldChange={handleSearchFieldChange} />
@@ -63,7 +61,7 @@ const Page = ({ filters, data }) => {
 {memoFilterBar}
       </FiltersContext.Provider>
       <Sort setSortState={setSortState} sortState={sortState} />
-      <MoviesContainer data={moviesState} />
+      <MoviesContainer data={sortState?(sortState==="DESC"?moviesState.sort((a, b) => a.rate - b.rate):moviesState.sort((a, b) => b.rate - a.rate)):moviesState} />
     </>
   );
 };

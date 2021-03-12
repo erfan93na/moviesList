@@ -1,5 +1,5 @@
 import { Box, Menu, MenuItem, Button } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React  from "react";
 const Sort = ({ setSortState, sortState }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
